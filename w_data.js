@@ -1,18 +1,18 @@
-var fs = require('fs')
-var readline = require('readline')
+var fs = require('fs');
+var readline = require('readline');
 
 const rl = readline.createInterface({
     input: fs.createReadStream('w_data.dat')
 });
 
-var dataArr = []
+var dataArr = [];
 
 rl.on('line', (line) => {
     // Potentially extracts day, minimum temperature, and maximum temperature from each line
 
-    // Split lines on space delimiter and remove empty strings
+    // Split each lines on space delimiter into a new array and removes empty string array elements
     let lineData = line.split(' ').filter(function (x) {
-        return x != ''
+        return x != '';
     });
 
     let day;
@@ -22,17 +22,17 @@ rl.on('line', (line) => {
     for (let i = 0; i < lineData.length; i++) {
 
         // To clean the numbers:
-        let potential = parseInt(lineData[i].replace(/[^0-9]/, ''))
+        let potential = parseInt(lineData[i].replace(/[^0-9]/, ''));
 
         /* Column 0: Day; Column 1: Max Temperature; Column 2: Minimum Temperature */
         if (i === 0) {
-            day = potential
+            day = potential;
         }
         if (i === 1) {
-            maxTemp = potential
+            maxTemp = potential;
         }
         if (i === 2) {
-            minTemp = potential
+            minTemp = potential;
         }
     }
 
@@ -44,7 +44,7 @@ rl.on('line', (line) => {
     }
 
     if (!isNaN(dayObj.day) && dayObj.minTemp !== undefined && dayObj.maxTemp !== undefined) {
-        dataArr.push(dayObj)
+        dataArr.push(dayObj);
     }
 
 })
@@ -52,15 +52,15 @@ rl.on('line', (line) => {
 rl.on('close', () => {
     // Finds the day with the minimum temperature spread, after the readstream closes
 
-    let minSpread = dataArr[0].spread
+    let minSpread = dataArr[0].spread;
     let minSpreadDay;
 
     for (let i = 0; i < dataArr.length; i++) {
 
-        let daysSpread = dataArr[i].spread
+        let daysSpread = dataArr[i].spread;
         if (daysSpread < minSpread) {
-            minSpread = daysSpread
-            minSpreadDay = dataArr[i].day
+            minSpread = daysSpread;
+            minSpreadDay = dataArr[i].day;
         }
 
         if (dataArr[i].day === 30) {
@@ -68,6 +68,6 @@ rl.on('close', () => {
         }
     }
 
-    console.log("Day " + minSpreadDay + " of the month has the smallest temperature spread (with a spread of " + minSpread + ").")
+    console.log("Day " + minSpreadDay + " of the month has the smallest temperature spread (with a spread of " + minSpread + ").");
 
 })

@@ -1,18 +1,18 @@
-var fs = require('fs')
-var readline = require('readline')
+var fs = require('fs');
+var readline = require('readline');
 
 const rl = readline.createInterface({
     input: fs.createReadStream('soccer.dat')
 });
 
-var dataArr = []
+var dataArr = [];
 
 rl.on('line', (line) => {
     // Potentially extracts team name, 'for' score, and 'against' score from each line
 
     // Split lines on space delimiter and remove empty strings
     let lineData = line.split(' ').filter(function (x) {
-        return x != ''
+        return x != '';
     });
 
     let scoreFor;
@@ -21,16 +21,16 @@ rl.on('line', (line) => {
 
     for (let i = 0, j = 0; i < lineData.length; i++) {
         // To clean the numbers:
-        let potential = parseInt(lineData[i].replace(/[^0-9]/, ''))
+        let potential = parseInt(lineData[i].replace(/[^0-9]/, ''));
 
         if (i === 1) {
-            teamName = lineData[i]
+            teamName = lineData[i];
         }
         if (i === 6) {
-            scoreFor = potential
+            scoreFor = potential;
         }
         if (i === 8) {
-            scoreAgainst = potential
+            scoreAgainst = potential;
         }
     }
 
@@ -42,7 +42,7 @@ rl.on('line', (line) => {
     }
 
     if (scoreObj.teamName !== undefined && scoreObj.scoreFor !== undefined && scoreObj.scoreAgainst !== undefined) {
-        dataArr.push(scoreObj)
+        dataArr.push(scoreObj);
     }
 
 })
@@ -50,17 +50,17 @@ rl.on('line', (line) => {
 rl.on('close', () => {
     // Finds the team with the minimum temperature spread, after the readstream closes
 
-    let minSpread = dataArr[0].spread
+    let minSpread = dataArr[0].spread;
     let minSpreadTeam;
 
     for (let i = 0; i < dataArr.length; i++) {
-        let teamsSpread = dataArr[i].spread
+        let teamsSpread = dataArr[i].spread;
         if (teamsSpread < minSpread) {
-            minSpread = teamsSpread
-            minSpreadTeam = dataArr[i].teamName
+            minSpread = teamsSpread;
+            minSpreadTeam = dataArr[i].teamName;
         }
     }
 
-    console.log(minSpreadTeam + " has the smallest difference in 'for' and 'against' goals (" + (minSpread) + ").")
+    console.log(minSpreadTeam + " has the smallest difference in 'for' and 'against' goals (" + (minSpread) + ").");
 
 })
