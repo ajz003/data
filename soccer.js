@@ -27,10 +27,10 @@ rl.on('line', (line) => {
             teamName = lineData[i]
         }
         if (i === 6) {
-            scoreFor = lineData[i]
+            scoreFor = potential
         }
         if (i === 8) {
-            scoreAgainst = lineData[i]
+            scoreAgainst = potential
         }
     }
 
@@ -40,6 +40,7 @@ rl.on('line', (line) => {
         scoreAgainst: scoreAgainst,
         spread: Math.abs(scoreFor - scoreAgainst)
     }
+
     if (scoreObj.teamName !== undefined && scoreObj.scoreFor !== undefined && scoreObj.scoreAgainst !== undefined) {
         dataArr.push(scoreObj)
     }

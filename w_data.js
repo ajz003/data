@@ -15,7 +15,6 @@ rl.on('line', (line) => {
         return x != ''
     });
 
-
     let day;
     let maxTemp;
     let minTemp;
@@ -25,14 +24,15 @@ rl.on('line', (line) => {
         // To clean the numbers:
         let potential = parseInt(lineData[i].replace(/[^0-9]/, ''))
 
+        /* Column 0: Day; Column 1: Max Temperature; Column 2: Minimum Temperature */
         if (i === 0) {
-            day = lineData[i]
+            day = potential
         }
         if (i === 1) {
-            maxTemp = lineData[i]
+            maxTemp = potential
         }
         if (i === 2) {
-            minTemp = lineData[i]
+            minTemp = potential
         }
     }
 
